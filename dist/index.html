@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+        <head>
+            <title>Titre</title>
+            <meta charset="utf-8" />
+            <link rel="stylesheet" type="text/css" href="dist/assets/styles/index.css" />
+        </head>
+        <body ng-app="bomberman">
+            <header>
+            </header>
+
+            <div id="content"> 
+                <canvas width="494" height="494" id="layerDecor"></canvas>   
+            </div>
+
+            <footer>               
+            </footer>
+
+            <script>
+                alert(document.getElementById("layerDecor")[0]);
+            </script>
+            <script src="https://cdn-orig.socket.io/socket.io-1.4.5.js"></script>
+            <script src="dist/typescript/app.js"></script>
+        </body>
+</html>
