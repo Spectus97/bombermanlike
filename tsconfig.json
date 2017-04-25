@@ -1,13 +1,15 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "module": "commonjs",
+        // "module": "commonjs",
+        "outFile": "./build/index.js",
         "sourceMap": true
     },
     "include": [
         "dist/typescript/**/*"
     ],
     "exclude": [
+        "./build",
         "node_modules",
         "**/*.spec.ts"
     ]

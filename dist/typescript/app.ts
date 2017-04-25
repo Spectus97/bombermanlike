@@ -2,15 +2,20 @@ module project{
     export class Game{
         layerMap : component.Map;
 
-        constructor(widthCanvas:number,heightCanvas:number){
-            this.layerMap = new component.Map(widthCanvas,heightCanvas);
+        constructor(canvas:HTMLCanvasElement){
+            this.layerMap = new component.Map(canvas);
+        }
+
+        public run(){
+            setInterval(() => {
+                this.layerMap.drawOnCanvas();
+            },1000/60);
         }
     }
 }
 
 window.onload = () => {
-    let canvasMapLayer : HTMLElement = document.getElementById("layerDecor")[0];
-    console.log(canvasMapLayer);
-    
-    //let game : project.Game = new project.Game(canvasMapLayer.width,canvasMapLayer.height);
+    let canvasMapLayer : HTMLCanvasElement = <HTMLCanvasElement>document.getElementById("layerDecor");
+    let game : project.Game = new project.Game(canvasMapLayer);
+    game.run();
 };

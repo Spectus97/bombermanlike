@@ -3,10 +3,10 @@ var app = express();
 var serv = require("http").Server(app);
 
 app.get('/',function(req,res){
-    res.sendFile(__dirname + '/dist/index.html');
+    res.sendFile(__dirname + '/build/index.html');
 });
 
-app.use('/dist',express.static(__dirname + '/dist'));
+app.use('/build',express.static(__dirname + '/build'));
 
 serv.listen(2000);
 
