@@ -14,9 +14,9 @@ module project.component{
             if(this.type == 0){ // SOL
                 this.img.src = "build/assets/img/sol.png"; 
             }else if(this.type == 1){ // ARBUSTE
-                this.img.src = "build/assets/img/arbuste.png"; 
+                this.img.src = "build/assets/img/paille.png"; 
             }else if(this.type == 2){ // EAU_SEUL
-                this.img.src = "build/assets/img/eau_seul.png"; 
+                this.img.src = "build/assets/img/bois.png"; 
             }else if(this.type == 3){ // EAU_VERTICALE
                 this.img.src = "build/assets/img/eau_vertical.png"; 
             }else if(this.type == 4){ // EAU_HORIZONTALE

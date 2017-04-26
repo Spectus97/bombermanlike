@@ -33,10 +33,10 @@ var project;
                     this.img.src = "build/assets/img/sol.png";
                 }
                 else if (this.type == 1) {
-                    this.img.src = "build/assets/img/arbuste.png";
+                    this.img.src = "build/assets/img/paille.png";
                 }
                 else if (this.type == 2) {
-                    this.img.src = "build/assets/img/eau_seul.png";
+                    this.img.src = "build/assets/img/bois.png";
                 }
                 else if (this.type == 3) {
                     this.img.src = "build/assets/img/eau_vertical.png";
@@ -131,4 +131,17 @@ var project;
         }());
         component.Map = Map;
     })(component = project.component || (project.component = {}));
+})(project || (project = {}));
+var project;
+(function (project) {
+    var models;
+    (function (models) {
+        var Directions;
+        (function (Directions) {
+            Directions[Directions["Up"] = 0] = "Up";
+            Directions[Directions["Down"] = 1] = "Down";
+            Directions[Directions["Left"] = 2] = "Left";
+            Directions[Directions["Right"] = 3] = "Right";
+        })(Directions = models.Directions || (models.Directions = {}));
+    })(models = project.models || (project.models = {}));
 })(project || (project = {}));
