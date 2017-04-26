@@ -3,6 +3,14 @@
     padding:0px;
 }
 
-#layerDecor{
-    border: 1px black solid;
+body{
+    width:100%;
+    height:100%;
+}
+
+#content{
+    width: 494px;
+    height: 494px;
+    position: relative;
+    margin:auto;
 }

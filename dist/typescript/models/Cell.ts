@@ -3,6 +3,6 @@ module project.models{
         width:  number;
         height: number;
         type: number;
-        img: string;
+        img: HTMLImageElement;
     }
 }

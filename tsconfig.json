@@ -3,7 +3,7 @@
         "target": "es5",
         // "module": "commonjs",
         "outFile": "./build/index.js",
-        "sourceMap": true
+        "sourceMap": false
     },
     "include": [
         "dist/typescript/**/*"
