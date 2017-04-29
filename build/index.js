@@ -60,6 +60,9 @@ var project;
                 else if (this.type == 8) {
                     this.img.src = "build/assets/img/eau_coin_haut_droit.png";
                 }
+                else if (this.type == 20) {
+                    this.img.src = "build/assets/img/singe_sprite.png";
+                }
             }
             return Cell;
         }());
@@ -177,7 +180,12 @@ var project;
             Map.prototype.drawOnCanvas = function () {
                 for (var i = 0; i < this.height; i++) {
                     for (var j = 0; j < this.width; j++) {
-                        this.ctx.drawImage(this.board[i][j].img, j * this.board[i][j].width, i * this.board[i][j].height, this.board[i][j].width, this.board[i][j].height);
+                        if (this.board[i][j].type >= 20 && this.board[i][j].type <= 30) {
+                            this.ctx.drawImage(this.board[i][j].img, 0, 0, this.board[i][j].width, this.board[i][j].height + 10, j * this.board[i][j].width, i * this.board[i][j].height - 10, this.board[i][j].width, this.board[i][j].height + 10);
+                        }
+                        else {
+                            this.ctx.drawImage(this.board[i][j].img, j * this.board[i][j].width, i * this.board[i][j].height, this.board[i][j].width, this.board[i][j].height);
+                        }
                     }
                 }
             };
@@ -199,11 +207,13 @@ var project;
                 this.delayBomb = 1;
                 this.nbBomb = 1;
                 this.direction = project.models.Directions.Down;
-                this.spritePlayer = new Image();
-                this.spritePlayer.src = "";
-                this.spriteBomb = new Image();
-                this.spriteBomb.src = "";
+                this.spritePlayerType = 20;
+                this.spriteBombType = 20;
             }
+            /**
+             * Function which add player on the current map game (same layer)
+             * @param map Current map
+             */
             Player.prototype.spawn = function (map) {
                 var pos = new component.Position(-1, -1);
                 var listCell;
@@ -213,9 +223,8 @@ var project;
                     listCell = map.getCellsToDestroy(pos);
                 } while (listCell == null);
                 for (var i = 0; i < listCell.length; i++) {
-                    console.log(listCell[i].toString());
                     if (listCell[i] == pos) {
-                        map.board[listCell[i].x][listCell[i].y] = new component.Cell(5);
+                        map.board[listCell[i].x][listCell[i].y] = new component.Cell(this.spritePlayerType);
                     }
                     else {
                         map.board[listCell[i].x][listCell[i].y] = new component.Cell(0);

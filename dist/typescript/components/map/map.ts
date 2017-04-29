@@ -128,7 +128,11 @@ module project.component{
         public drawOnCanvas(): void{
             for(var i = 0; i < this.height; i++){
                 for(var j = 0; j < this.width; j++){
-                    this.ctx.drawImage(this.board[i][j].img,j*this.board[i][j].width,i*this.board[i][j].height,this.board[i][j].width,this.board[i][j].height);         
+                    if(this.board[i][j].type >= 20 && this.board[i][j].type <= 30){ // PLAYER SPRITES                      
+                        this.ctx.drawImage(this.board[i][j].img,0,0,this.board[i][j].width,this.board[i][j].height+10,j*this.board[i][j].width,i*this.board[i][j].height - 10,this.board[i][j].width,this.board[i][j].height+10); 
+                    }else{ // MAP SPRITE
+                        this.ctx.drawImage(this.board[i][j].img,j*this.board[i][j].width,i*this.board[i][j].height,this.board[i][j].width,this.board[i][j].height);   
+                    }           
                 }  
             }   
         }

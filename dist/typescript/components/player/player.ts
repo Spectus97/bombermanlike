@@ -3,8 +3,8 @@ module project.component{
         pseudo: string;
         isAlive: boolean;
         position: Position;
-        spritePlayer: HTMLImageElement;
-        spriteBomb: HTMLImageElement;
+        spritePlayerType: number;
+        spriteBombType: number;
         moveSpeed: number;
         bombPosed: boolean; // IF TRUE => CAN'T POSE ANY BOMB BEFORE THAT PREVIOUS BOMB HAD EXPLODE
         delayBomb: number; // DELAY OF BOMB BEFORE EXPLOSION WHEN IT IS POSED
@@ -19,12 +19,14 @@ module project.component{
             this.delayBomb = 1;
             this.nbBomb = 1;
             this.direction = models.Directions.Down;
-            this.spritePlayer = new Image();
-            this.spritePlayer.src = "";
-            this.spriteBomb = new Image();
-            this.spriteBomb.src = "";
+            this.spritePlayerType = 20;
+            this.spriteBombType = 20;
         }
 
+        /**
+         * Function which add player on the current map game (same layer) 
+         * @param map Current map
+         */
         public spawn(map: component.Map): void{
             let pos : Position = new Position(-1,-1);
             let listCell : Array<Position>;
@@ -35,11 +37,9 @@ module project.component{
                 listCell = map.getCellsToDestroy(pos); 
             }while(listCell == null);
 
-            for(var i = 0; i < listCell.length; i++){
-                console.log(listCell[i].toString());
-                
-                if(listCell[i] == pos){
-                    map.board[listCell[i].x][listCell[i].y] = new Cell(5);
+            for(var i = 0; i < listCell.length; i++){              
+                if(listCell[i] == pos){ // Player                  
+                    map.board[listCell[i].x][listCell[i].y] = new Cell(this.spritePlayerType);
                 }else{
                     map.board[listCell[i].x][listCell[i].y] = new Cell(0);
                 }

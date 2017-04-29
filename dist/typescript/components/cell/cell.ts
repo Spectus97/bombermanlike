@@ -29,7 +29,9 @@ module project.component{
                 this.img.src = "build/assets/img/eau_coin_haut_gauche.png"; 
             }else if(this.type == 8){ // EAU_COIN_HAUT_DROIT
                 this.img.src = "build/assets/img/eau_coin_haut_droit.png"; 
-            }              
+            }else if(this.type == 20){ // MONKEY SPRITE
+                this.img.src = "build/assets/img/singe_sprite.png"; 
+            }               
         }
     }
 }

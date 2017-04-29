@@ -3,8 +3,8 @@ module project.models{
         pseudo: string;
         isAlive: boolean;
         position: component.Position;
-        spritePlayer: HTMLImageElement;
-        spriteBomb: HTMLImageElement;
+        spritePlayerType: number;
+        spriteBombType: number;
         moveSpeed: number;
         bombPosed: boolean; // IF TRUE => CAN'T POSE ANY BOMB BEFORE THAT PREVIOUS BOMB HAD EXPLODE
         delayBomb: number; // DELAY OF BOMB BEFORE EXPLOSION WHEN IT IS POSED
