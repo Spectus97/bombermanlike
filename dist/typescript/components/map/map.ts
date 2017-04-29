@@ -16,6 +16,9 @@ module project.component{
             this.drawOnCanvas();
         }
 
+        /**
+         *  Init the map
+         */
         public initBoard(): void{
             this.board = [];
             this.defaultMap =  [[7,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,8],
@@ -46,6 +49,58 @@ module project.component{
             }    
         }
 
+        /**
+         * Constraints : 3 blocs type 0 min - cell.type = 0 
+         */
+        public getCellsToDestroy(startPos: Position): Array<Position>{
+            let cellList : Array<Position> = [];
+            cellList.push(startPos); // Init with the start Pos , need 2 positions now
+            
+            if(this.cellIsAvaible(startPos)){
+                // FIRST LEFT CELL
+                if(this.cellIsAvaible(new Position(startPos.x,startPos.y-1))){
+                    cellList.push(new Position(startPos.x,startPos.y-1));
+
+                    if(cellList.length == 3)
+                        return cellList;
+                }
+                // RIGHT
+                if(this.cellIsAvaible(new Position(startPos.x,startPos.y+1))){
+                    cellList.push(new Position(startPos.x,startPos.y+1));
+
+                    if(cellList.length == 3)
+                        return cellList;
+                }
+                // TOP
+                if(this.cellIsAvaible(new Position(startPos.x-1,startPos.y))){
+                    cellList.push(new Position(startPos.x-1,startPos.y));
+
+                    if(cellList.length == 3)
+                        return cellList;
+                }
+                // BOTTOM
+                if(this.cellIsAvaible(new Position(startPos.x+1,startPos.y))){
+                    cellList.push(new Position(startPos.x+1,startPos.y));
+
+                    if(cellList.length == 3)
+                        return cellList;
+                }
+            }
+
+            return null;
+        }
+
+        /**
+         *  Return true if cell is sol / paille
+         * @param pos 
+         */
+        public cellIsAvaible(pos:Position): boolean{
+            return (this.board[pos.x][pos.y].type == 0 || this.board[pos.x][pos.y].type == 1);
+        }
+
+        /**
+         * return the current map to string format
+         */
         public boardToString(): string{
             let txt: string = "[";
 
@@ -67,6 +122,9 @@ module project.component{
             return txt+"]";
         }
 
+        /**
+         *  Draw on canvas the current map
+         */
         public drawOnCanvas(): void{
             for(var i = 0; i < this.height; i++){
                 for(var j = 0; j < this.width; j++){

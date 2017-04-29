@@ -3,12 +3,14 @@ var project;
     var Game = (function () {
         function Game(canvas) {
             this.layerMap = new project.component.Map(canvas);
+            this.p1 = new project.component.Player("p1");
+            this.p2 = new project.component.Player("p2");
         }
         Game.prototype.run = function () {
             var _this = this;
             setInterval(function () {
                 _this.layerMap.drawOnCanvas();
-            }, 1000 / 60);
+            }, 1000 / 30);
         };
         return Game;
     }());
@@ -18,6 +20,8 @@ window.onload = function () {
     var canvasMapLayer = document.getElementById("layerDecor");
     var game = new project.Game(canvasMapLayer);
     game.run();
+    game.p1.spawn(game.layerMap);
+    game.p2.spawn(game.layerMap);
 };
 var project;
 (function (project) {
@@ -75,6 +79,9 @@ var project;
                 this.initBoard();
                 this.drawOnCanvas();
             }
+            /**
+             *  Init the map
+             */
             Map.prototype.initBoard = function () {
                 this.board = [];
                 this.defaultMap = [[7, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 8],
@@ -103,6 +110,50 @@ var project;
                     }
                 }
             };
+            /**
+             * Constraints : 3 blocs type 0 min - cell.type = 0
+             */
+            Map.prototype.getCellsToDestroy = function (startPos) {
+                var cellList = [];
+                cellList.push(startPos); // Init with the start Pos , need 2 positions now
+                if (this.cellIsAvaible(startPos)) {
+                    // FIRST LEFT CELL
+                    if (this.cellIsAvaible(new component.Position(startPos.x, startPos.y - 1))) {
+                        cellList.push(new component.Position(startPos.x, startPos.y - 1));
+                        if (cellList.length == 3)
+                            return cellList;
+                    }
+                    // RIGHT
+                    if (this.cellIsAvaible(new component.Position(startPos.x, startPos.y + 1))) {
+                        cellList.push(new component.Position(startPos.x, startPos.y + 1));
+                        if (cellList.length == 3)
+                            return cellList;
+                    }
+                    // TOP
+                    if (this.cellIsAvaible(new component.Position(startPos.x - 1, startPos.y))) {
+                        cellList.push(new component.Position(startPos.x - 1, startPos.y));
+                        if (cellList.length == 3)
+                            return cellList;
+                    }
+                    // BOTTOM
+                    if (this.cellIsAvaible(new component.Position(startPos.x + 1, startPos.y))) {
+                        cellList.push(new component.Position(startPos.x + 1, startPos.y));
+                        if (cellList.length == 3)
+                            return cellList;
+                    }
+                }
+                return null;
+            };
+            /**
+             *  Return true if cell is sol / paille
+             * @param pos
+             */
+            Map.prototype.cellIsAvaible = function (pos) {
+                return (this.board[pos.x][pos.y].type == 0 || this.board[pos.x][pos.y].type == 1);
+            };
+            /**
+             * return the current map to string format
+             */
             Map.prototype.boardToString = function () {
                 var txt = "[";
                 for (var i = 0; i < this.height; i++) {
@@ -120,6 +171,9 @@ var project;
                 }
                 return txt + "]";
             };
+            /**
+             *  Draw on canvas the current map
+             */
             Map.prototype.drawOnCanvas = function () {
                 for (var i = 0; i < this.height; i++) {
                     for (var j = 0; j < this.width; j++) {
@@ -130,6 +184,64 @@ var project;
             return Map;
         }());
         component.Map = Map;
+    })(component = project.component || (project.component = {}));
+})(project || (project = {}));
+var project;
+(function (project) {
+    var component;
+    (function (component) {
+        var Player = (function () {
+            function Player(pseudo) {
+                this.pseudo = pseudo;
+                this.isAlive = true;
+                this.moveSpeed = 0.1;
+                this.bombPosed = false;
+                this.delayBomb = 1;
+                this.nbBomb = 1;
+                this.direction = project.models.Directions.Down;
+                this.spritePlayer = new Image();
+                this.spritePlayer.src = "";
+                this.spriteBomb = new Image();
+                this.spriteBomb.src = "";
+            }
+            Player.prototype.spawn = function (map) {
+                var pos = new component.Position(-1, -1);
+                var listCell;
+                do {
+                    pos.x = Math.floor(1 + Math.random() * (map.width - 3));
+                    pos.y = Math.floor(1 + Math.random() * (map.height - 3));
+                    listCell = map.getCellsToDestroy(pos);
+                } while (listCell == null);
+                for (var i = 0; i < listCell.length; i++) {
+                    console.log(listCell[i].toString());
+                    if (listCell[i] == pos) {
+                        map.board[listCell[i].x][listCell[i].y] = new component.Cell(5);
+                    }
+                    else {
+                        map.board[listCell[i].x][listCell[i].y] = new component.Cell(0);
+                    }
+                }
+            };
+            return Player;
+        }());
+        component.Player = Player;
+    })(component = project.component || (project.component = {}));
+})(project || (project = {}));
+var project;
+(function (project) {
+    var component;
+    (function (component) {
+        var Position = (function () {
+            function Position(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+            Position.prototype.toString = function () {
+                return "pos[" + this.x + "," + this.y + "]";
+            };
+            return Position;
+        }());
+        component.Position = Position;
     })(component = project.component || (project.component = {}));
 })(project || (project = {}));
 var project;

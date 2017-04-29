@@ -2,7 +2,7 @@ module project.models{
     export interface IPlayer{
         pseudo: string;
         isAlive: boolean;
-        position: models.Position;
+        position: component.Position;
         spritePlayer: HTMLImageElement;
         spriteBomb: HTMLImageElement;
         moveSpeed: number;

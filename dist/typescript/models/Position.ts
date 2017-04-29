@@ -1,5 +1,5 @@
 module project.models{
-    export interface Position{
+    export interface IPosition{
         x: number;
         y: number;
     }
